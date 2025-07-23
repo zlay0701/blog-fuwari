@@ -9,7 +9,7 @@ import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
 	title: "zlay - 素喂’Blog",
-	subtitle: "Demo Site",
+	subtitle: "你必须很努力,才能看起来毫不费力",
 	lang: "zh_CN", // 'en', 'zh_CN', 'zh_TW', 'ja', 'ko', 'es', 'th'
 	themeColor: {
 		hue: 250, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
@@ -80,7 +80,7 @@ export const profileConfig: ProfileConfig = {
 export const licenseConfig: LicenseConfig = {
 	enable: true,
 	name: "CC BY-NC-SA 4.0",
-	url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+	url: "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans",
 };
 
 export const expressiveCodeConfig: ExpressiveCodeConfig = {
