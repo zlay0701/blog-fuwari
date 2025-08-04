@@ -99,7 +99,7 @@ export const comment: Comment = {
 			category: 'giscus-category',
 			categoryId: 'DIC_kwDOOyeurs4Ctuxg',
 			mapping: 'pathname',
-			reactionsEnabled: "1",
+			reactionsEnabled: "0",
 			theme: 'light',
 			darkTheme: 'dark_dimmed',
 		},
