@@ -9,7 +9,7 @@ const postsCollection = defineCollection({
 		description: z.string().optional().default(""),
 		image: z.string().optional().default(""),
 		tags: z.array(z.string()).optional().default([]),
-		category: z.string().optional().nullable().default(""),
+		category: z.array(z.string()).optional().default([]), // 默认为空数组
 		lang: z.string().optional().default(""),
 
 		/* For internal use */

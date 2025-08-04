@@ -78,37 +78,41 @@ export type Category = {
 	url: string;
 };
 
+// src/utils/content-utils.ts
 export async function getCategoryList(): Promise<Category[]> {
-	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	});
-	const count: { [key: string]: number } = {};
-	allBlogPosts.map((post: { data: { category: string | null } }) => {
-		if (!post.data.category) {
-			const ucKey = i18n(I18nKey.uncategorized);
-			count[ucKey] = count[ucKey] ? count[ucKey] + 1 : 1;
-			return;
-		}
+  const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
+    return import.meta.env.PROD ? data.draft !== true : true;
+  });
+  const count: { [key: string]: number } = {};
 
-		const categoryName =
-			typeof post.data.category === "string"
-				? post.data.category.trim()
-				: String(post.data.category).trim();
+  allBlogPosts.map((post: { data: { category: string[] } }) => {
+    const categories = post.data.category;
+    if (categories.length === 0) {
+      // 无分类时使用"未分类"
+      const ucKey = i18n(I18nKey.uncategorized);
+      count[ucKey] = (count[ucKey] || 0) + 1;
+      return;
+    }
 
-		count[categoryName] = count[categoryName] ? count[categoryName] + 1 : 1;
-	});
+    // 遍历多分类数组
+    categories.forEach(category => {
+      const categoryName = typeof category === "string" 
+        ? category.trim() 
+        : String(category).trim();
+      if (categoryName) { // 跳过空字符串分类
+        count[categoryName] = (count[categoryName] || 0) + 1;
+      }
+    });
+  });
 
-	const lst = Object.keys(count).sort((a, b) => {
-		return a.toLowerCase().localeCompare(b.toLowerCase());
-	});
+  // 排序并生成结果
+  const sortedCategories = Object.keys(count).sort((a, b) => {
+    return a.toLowerCase().localeCompare(b.toLowerCase());
+  });
 
-	const ret: Category[] = [];
-	for (const c of lst) {
-		ret.push({
-			name: c,
-			count: count[c],
-			url: getCategoryUrl(c),
-		});
-	}
-	return ret;
+  return sortedCategories.map(name => ({
+    name,
+    count: count[name],
+    url: getCategoryUrl(name),
+  }));
 }

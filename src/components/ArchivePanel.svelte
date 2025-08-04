@@ -19,7 +19,7 @@ interface Post {
 	data: {
 		title: string;
 		tags: string[];
-		category?: string;
+		category?: string[];
 		published: Date;
 	};
 }
@@ -53,14 +53,18 @@ onMount(async () => {
 	}
 
 	if (categories.length > 0) {
-		filteredPosts = filteredPosts.filter(
-			(post) => post.data.category && categories.includes(post.data.category),
-		);
-	}
+        filteredPosts = filteredPosts.filter(post => {
+            // 确保文章分类数组存在，且两个数组有至少一个共同元素
+            return post.data.category && post.data.category.some(cat => categories.includes(cat));
+        });
+    }
 
-	if (uncategorized) {
-		filteredPosts = filteredPosts.filter((post) => !post.data.category);
-	}
+    if (uncategorized) {
+        filteredPosts = filteredPosts.filter((post) => {
+            // 检查分类数组是否为空（未分类）
+            return !post.data.category || post.data.category.length === 0;
+        });
+    }
 
 	const grouped = filteredPosts.reduce(
 		(acc, post) => {
