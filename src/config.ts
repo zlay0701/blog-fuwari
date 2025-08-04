@@ -91,7 +91,7 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 };
 
 export const comment: Comment = {
-	defaultProvider: "utterances", // utterances waline giscus
+	defaultProvider: "giscus", // utterances waline giscus 不推荐utterances,在pages使用有问题,使用giscus(utterances增强版)
 	providers: {
 		giscus: {
 			repo: 'zlay0701/hexo-demo-comments',
