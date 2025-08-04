@@ -110,7 +110,7 @@ export const comment: Comment = {
 				placeholder: '请文明评论呀',
 			},
 			commentCount: false, // 评论数统计
-			pageview: true, // 文章浏览量统计
+			pageview: true, // 文章浏览量统计 
 			lang: 'zh-CN',
 			search: false,
 			reaction: false,
