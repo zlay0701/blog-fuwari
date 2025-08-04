@@ -4,7 +4,17 @@ export type SiteConfig = {
 	title: string;
 	subtitle: string;
 
-	lang: string;
+	lang:
+		| "en"
+		| "zh_CN"
+		| "zh_TW"
+		| "ja"
+		| "ko"
+		| "es"
+		| "th"
+		| "vi"
+		| "tr"
+		| "id";
 
 	themeColor: {
 		hue: number;
@@ -80,7 +90,7 @@ export type BlogPostData = {
 	tags: string[];
 	draft?: boolean;
 	image?: string;
-	category?: string[]; // ä» string æ”¹ä¸º string[]
+	category?: string[]; // ´Ó string ¸ÄÎª string[]
 	prevTitle?: string;
 	prevSlug?: string;
 	nextTitle?: string;
@@ -114,7 +124,7 @@ export type Comment = {
 			lang: string
 			search: boolean
 			reaction: boolean
-			imageUploader: boolean // ç¦æ­¢æ–‡ä»¶ä¸Šä¼ 
+			imageUploader: boolean // ½ûÖ¹ÎÄ¼şÉÏ´«
 			turnstileKey: string
 			emoji: string[],
 			requiredMeta: string[],
