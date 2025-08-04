@@ -109,8 +109,8 @@ export const comment: Comment = {
 			locale: {
 				placeholder: '请文明评论呀',
 			},
-			commentCount: false,
-			pageview: true,
+			commentCount: false, // 评论数统计
+			pageview: true, // 文章浏览量统计
 			lang: 'zh-CN',
 			search: false,
 			reaction: false,

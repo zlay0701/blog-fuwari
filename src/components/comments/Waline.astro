@@ -2,10 +2,20 @@
 ---
 interface Props {
   config: {
-    serverURL: string;
-    lang: string;
-    pageSize?: number;
-    emoji?: string[];
+    serverURL: string
+    cssUrl: string
+    locale: {
+      placeholder: string
+    },
+    commentCount: boolean
+    pageview: boolean
+    lang: string
+    search: boolean
+    reaction: boolean
+    imageUploader: boolean // 禁止文件上传
+    turnstileKey: string
+    emoji: string[],
+    requiredMeta: string[],
   };
   path: string;  // 当前页面路径，用于区分不同页面的评论
 }
@@ -17,14 +27,22 @@ const { config, path } = Astro.props;
   id="waline" 
   data-server-url={config.serverURL}
   data-lang={config.lang}
-  data-page-size={config.pageSize || 10}
+  data-page-size=10
   data-emoji={config.emoji?.join(',') || ''}
   data-path={path}
+  data-locale-placeholder={config.locale.placeholder}
+  data-commentcount={config.commentCount}
+  data-pageview={config.pageview}
+  data-search={config.search}
+  data-reaction={config.reaction}
+  data-imageuploader={config.imageUploader}
+  data-turnstilekey={config.turnstileKey}
+  data-requiredmeta={config.requiredMeta?.join(',') || ''}
 ></div>
 
 <link
   rel="stylesheet"
-  href="https://unpkg.com/@waline/client@v3/dist/waline.css"
+  href={config.cssUrl}
 />
 
 <script type="module">
@@ -39,6 +57,26 @@ const { config, path } = Astro.props;
       pageSize: Number(walineEl.dataset.pageSize),
       emoji: walineEl.dataset.emoji ? walineEl.dataset.emoji.split(',') : [],
       path: walineEl.dataset.path,
+      locale: {
+        placeholder: walineEl.dataset.localePlaceholder,
+      },
+      commentCount: strToBoolean(walineEl.dataset.commentcount),// 评论数统计
+      pageview: strToBoolean(walineEl.dataset.pageview),// 文章浏览量统计
+      search: strToBoolean(walineEl.dataset.search),
+      reaction: strToBoolean(walineEl.dataset.reaction),
+      imageUploader: strToBoolean(walineEl.dataset.imageuploader),
+      turnstileKey: walineEl.dataset.turnstilekey,
+      requiredMeta: walineEl.dataset.requiredmeta ? walineEl.dataset.requiredmeta.split(',') : [],
     });
   }
+
+function strToBoolean(str) {
+  // 先去除首尾空格，统一转为小写
+  const normalized = str?.trim().toLowerCase();
+  if (normalized === "true") return true;
+  if (normalized === "false") return false;
+  // 处理无效字符串（可选：抛出错误或返回默认值）
+  throw new Error(`无法转换为布尔值：${str}`);
+  // 或返回默认值：return false;
+}
 </script>
