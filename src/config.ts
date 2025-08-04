@@ -4,6 +4,7 @@ import type {
 	NavBarConfig,
 	ProfileConfig,
 	SiteConfig,
+	Comment,
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 
@@ -89,7 +90,7 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	theme: "github-dark",
 };
 
-export const comment = {
+export const comment: Comment = {
 	defaultProvider: "utterances", // utterances waline giscus
 	providers: {
 		giscus: {

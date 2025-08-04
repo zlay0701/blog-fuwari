@@ -90,3 +90,40 @@ export type BlogPostData = {
 export type ExpressiveCodeConfig = {
 	theme: string;
 };
+export type Comment = {
+	defaultProvider: string
+	providers: {
+		giscus: {
+			repo: string
+			repoId: string
+			category: string
+			categoryId: string
+			mapping: string
+			reactionsEnabled: string
+			theme: string
+			darkTheme: string
+		},
+		waline: {
+			serverURL: string
+			cssUrl: string
+			locale: {
+				placeholder: string
+			},
+			commentCount: boolean
+			pageview: boolean
+			lang: string
+			search: boolean
+			reaction: boolean
+			imageUploader: boolean // 禁止文件上传
+			turnstileKey: string
+			emoji: string[],
+			requiredMeta: string[],
+		},
+		utterances: {
+			repo: string;
+			issueTerm: string;
+			label?: string;
+			theme: string;
+		}
+	}
+};
