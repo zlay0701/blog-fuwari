@@ -1,0 +1,28 @@
+---
+interface Props {
+  repo: string;
+  issueTerm: string;
+  label?: string;
+  theme: string;
+}
+
+const {
+  repo,
+  issueTerm,
+  label,
+  theme
+} = Astro.props;
+console.log('repo', repo)
+---
+
+<div class="utterances-container">
+  <script
+    src="https://utteranc.es/client.js"
+    repo={repo}
+    issue-term={issueTerm}
+    {label}
+    theme={theme}
+    crossorigin="anonymous"
+    async
+  ></script>
+</div>

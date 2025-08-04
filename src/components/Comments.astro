@@ -1,0 +1,112 @@
+---
+import Utterances from '@components/comments/Utterances.astro';
+import Giscus from '@components/comments/Giscus.astro';
+import Waline from '@components/comments/Waline.astro';
+const {comment} = await import('../config');
+// 评论系统类型定义
+type CommentProvider = 'giscus' | 'waline' | 'utterances' | null
+
+// 组件属性接口
+interface Props {
+  // 文章唯一标识（通常是 slug）
+  identifier: string;
+  // 是否启用评论（从文章 frontmatter 获取）
+  enabled?: boolean;
+  // 默认评论系统
+  defaultProvider?: CommentProvider;
+  // 各评论系统配置
+  config?: {
+    giscus?: {
+      repo: string;
+      repoId: string;
+      category: string;
+      categoryId: string;
+      mapping: string;
+      reactionsEnabled: '0' | '1';
+      theme: string;
+      darkTheme: string;
+    };
+    waline?: {
+      serverURL: string;
+      lang?: string;
+      pageSize?: number;
+      emoji?: string[];
+    };
+    utterances?: {
+      repo: string;
+      issueTerm: string;
+      label?: string;
+      theme: string;
+    };
+  };
+}
+
+// 从属性获取值，设置默认值
+const {
+  identifier,
+  frontmatter
+} = Astro.props;
+
+// 如果禁用评论，不渲染任何内容
+const comments1 = frontmatter?.comments
+const comments2 = frontmatter?.comment?.enable
+const comments3 = frontmatter?.comment
+const comments4 = frontmatter?.hide_comment
+if (comments1 + '' === 'false') {
+  return;
+}
+if (comments2 + '' === 'false') {
+  return;
+}
+if (comments3 + '' === 'false') {
+  return;
+}
+if (comments1 + '' === 'true') {
+  return;
+}
+
+// 确定当前使用的评论系统（检查配置是否存在）
+const currentProvider = comment.defaultProvider
+// console.log('currentProvider', comment) 
+---
+
+<div class="comments-section mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
+  {currentProvider === 'giscus' && comment.providers.giscus && (
+    <Giscus 
+      {...comment.providers.giscus} 
+      identifier={identifier} 
+    />
+  )}
+  
+  {currentProvider === 'waline' && comment.providers.waline && (
+    <Waline 
+      config={comment.providers.waline} 
+      path={identifier} 
+    />
+  )}
+  
+  {currentProvider === 'utterances' && comment.providers.utterances && (
+    <Utterances 
+      {...comment.providers.utterances} 
+      issueTerm={identifier} 
+    />
+  )}
+  
+  {!currentProvider && (
+    <div class="text-center py-10 text-gray-500 dark:text-gray-400">
+      <p>评论系统配置有误或未配置，请检查评论系统设置</p>
+    </div>
+  )}
+</div>
+
+<style>
+  .comments-section :global(iframe) {
+    width: 100% !important;
+    min-height: 400px;
+  }
+  .pt-8 {
+    padding-top: 0rem;
+  }.mt-12 {
+      margin-top: 0rem;
+  }
+</style>

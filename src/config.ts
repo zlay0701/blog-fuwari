@@ -88,3 +88,45 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	// Please select a dark theme, as this blog theme currently only supports dark background color
 	theme: "github-dark",
 };
+
+export const comment = {
+	defaultProvider: "utterances", // utterances waline giscus
+	providers: {
+		giscus: {
+			repo: 'zlay0701/hexo-demo-comments',
+			repoId: 'R_kgDOOyeurg',
+			category: 'giscus-category',
+			categoryId: 'DIC_kwDOOyeurs4Ctuxg',
+			mapping: 'pathname',
+			reactionsEnabled: "1",
+			theme: 'light',
+			darkTheme: 'dark_dimmed',
+		},
+		waline: {
+			serverURL: 'https://waline.zlay.fun',
+			cssUrl: 'https://unpkg.com/@waline/client@v3/dist/waline.css',
+			locale: {
+				placeholder: '请文明评论呀',
+			},
+			commentCount: false,
+			pageview: true,
+			lang: 'zh-CN',
+			search: false,
+			reaction: false,
+			imageUploader: false, // 禁止文件上传
+			turnstileKey: '0x4AAAAAABgd77_f_MbFV2jY',
+			emoji: [
+				'https://unpkg.com/@waline/emojis@1.1.0/weibo',
+			],
+			requiredMeta: [
+				'nick',
+				'mail',
+			],
+		},
+		utterances: {
+			repo: 'zlay0701/hexo-demo-comments',
+			issueTerm: 'pathname',
+			theme: 'github-light',
+		}
+	}
+}

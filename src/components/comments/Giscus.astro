@@ -1,0 +1,42 @@
+---
+interface Props {
+  repo: string;
+  repoId: string;
+  category: string;
+  categoryId: string;
+  mapping: string;
+  reactionsEnabled: '0' | '1';
+  theme: string;
+  identifier: string;
+}
+
+const {
+  repo,
+  repoId,
+  category,
+  categoryId,
+  mapping,
+  reactionsEnabled,
+  theme,
+  identifier
+} = Astro.props;
+---
+
+<div class="giscus-container">
+  <script
+    src="https://giscus.app/client.js"
+    data-repo={repo}
+    data-repo-id={repoId}
+    data-category={category}
+    data-category-id={categoryId}
+    data-mapping={mapping}
+    data-reactions-enabled={reactionsEnabled}
+    data-theme={theme}
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-lang="zh-CN"
+    data-id={identifier}
+    crossorigin="anonymous"
+    async
+  ></script>
+</div>

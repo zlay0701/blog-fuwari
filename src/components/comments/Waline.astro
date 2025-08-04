@@ -1,0 +1,44 @@
+<!-- src/components/comments/Waline.astro -->
+---
+interface Props {
+  config: {
+    serverURL: string;
+    lang: string;
+    pageSize?: number;
+    emoji?: string[];
+  };
+  path: string;  // 当前页面路径，用于区分不同页面的评论
+}
+
+const { config, path } = Astro.props;
+---
+
+<div 
+  id="waline" 
+  data-server-url={config.serverURL}
+  data-lang={config.lang}
+  data-page-size={config.pageSize || 10}
+  data-emoji={config.emoji?.join(',') || ''}
+  data-path={path}
+></div>
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@waline/client@v3/dist/waline.css"
+/>
+
+<script type="module">
+  import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+  
+  const walineEl = document.getElementById('waline');
+  if (walineEl) {
+    init({
+      el: '#waline',
+      serverURL: walineEl.dataset.serverUrl,
+      lang: walineEl.dataset.lang,
+      pageSize: Number(walineEl.dataset.pageSize),
+      emoji: walineEl.dataset.emoji ? walineEl.dataset.emoji.split(',') : [],
+      path: walineEl.dataset.path,
+    });
+  }
+</script>

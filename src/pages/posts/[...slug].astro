@@ -13,6 +13,7 @@ import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
 import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
+import Comments from '@components/Comments.astro';
 
 export async function getStaticPaths() {
 	const blogEntries = await getSortedPosts();
@@ -26,6 +27,9 @@ const { entry } = Astro.props;
 const { Content, headings } = await entry.render();
 
 const { remarkPluginFrontmatter } = await entry.render();
+const { slug } = Astro.params;
+const frontmatter = entry.rendered?.metadata.frontmatter;
+// console.log('frontmatter', frontmatter)
 
 const jsonLd = {
 	"@context": "https://schema.org",
@@ -133,4 +137,9 @@ const jsonLd = {
         </a>
     </div>
 
+      <!-- 评论组件 -->
+      <Comments 
+        identifier={slug}
+        frontmatter={frontmatter} <!-- 支持在 md 中用 comments: false 禁用 -->
+      />
 </MainGridLayout>
