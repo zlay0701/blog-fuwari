@@ -51,7 +51,6 @@ const {
 const comments1 = frontmatter?.comments
 const comments2 = frontmatter?.comment?.enable
 const comments3 = frontmatter?.comment
-const comments4 = frontmatter?.hide_comment
 if (comments1 + '' === 'false') {
   return;
 }
@@ -59,9 +58,6 @@ if (comments2 + '' === 'false') {
   return;
 }
 if (comments3 + '' === 'false') {
-  return;
-}
-if (comments1 + '' === 'true') {
   return;
 }
 
