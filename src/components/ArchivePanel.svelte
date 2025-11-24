@@ -54,14 +54,14 @@ onMount(async () => {
 
 	if (categories.length > 0) {
         filteredPosts = filteredPosts.filter(post => {
-            // ç¡®ä¿æ–‡ç« åˆ†ç±»æ•°ç»„å­˜åœ¨ï¼Œä¸”ä¸¤ä¸ªæ•°ç»„æœ‰è‡³å°‘ä¸€ä¸ªå…±åŒå…ƒç´ 
+            // È·±£ÎÄÕÂ·ÖÀàÊı×é´æÔÚ£¬ÇÒÁ½¸öÊı×éÓĞÖÁÉÙÒ»¸ö¹²Í¬ÔªËØ
             return post.data.category && post.data.category.some(cat => categories.includes(cat));
         });
     }
 
     if (uncategorized) {
         filteredPosts = filteredPosts.filter((post) => {
-            // æ£€æŸ¥åˆ†ç±»æ•°ç»„æ˜¯å¦ä¸ºç©ºï¼ˆæœªåˆ†ç±»ï¼‰
+            // ¼ì²é·ÖÀàÊı×éÊÇ·ñÎª¿Õ£¨Î´·ÖÀà£©
             return !post.data.category || post.data.category.length === 0;
         });
     }
@@ -79,8 +79,8 @@ onMount(async () => {
 	);
 
 	const groupedPostsArray = Object.keys(grouped).map((yearStr) => ({
-		year: Number.parseInt(yearStr),
-		posts: grouped[Number.parseInt(yearStr)],
+		year: Number.parseInt(yearStr, 10),
+		posts: grouped[Number.parseInt(yearStr, 10)],
 	}));
 
 	groupedPostsArray.sort((a, b) => b.year - a.year);
